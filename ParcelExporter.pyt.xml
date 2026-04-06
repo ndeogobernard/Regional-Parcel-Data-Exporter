@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<metadata xml:lang="en">
+  <Esri>
+    <ArcGISFormat>1.0</ArcGISFormat>
+    <SyncOnce>TRUE</SyncOnce>
+  </Esri>
+
+  <tool name="ParcelExporter" displayname="Regional Parcel Exporter" toolboxalias="OhioPlanning">
+
+    <summary>
+      Bypasses ArcGIS Online export restrictions by connecting directly to the
+      GeoOhio Statewide Parcel REST service. No map layers need to be loaded
+      into your project. Supports targeted extraction by Statewide, ODOT District,
+      MPO Area, County, or a Custom Boundary shapefile or feature class.
+      All geometry and attribute data are preserved in a local File Geodatabase.
+    </summary>
+
+    <usage>
+      1. Open the tool from the Catalog pane (no layers needed in your map).
+      2. Choose a Filter Area from the dropdown.
+      3. Fill in the sub-parameter that appears for your chosen filter.
+      4. Select an Output Folder. A GDB named Ohio_Regional_Export.gdb will be created there.
+      5. Click Run.
+    </usage>
+
+    <parameters>
+
+      <param name="filter_type" displayname="Filter Area By">
+        <dialogexplanation>
+          Choose the geographic scale for your extraction.
+          "Statewide" downloads all Ohio parcel records (slow — millions of features).
+          "ODOT District", "MPO Area", and "County" perform server-side filtering
+          so only the records you need are transferred, making them much faster.
+          "Specific Boundary" lets you use any polygon layer as a spatial clip boundary.
+        </dialogexplanation>
+      </param>
+
+      <param name="dist_num" displayname="ODOT District">
+        <dialogexplanation>
+          Select one of Ohio's 12 ODOT Districts. The tool contains a built-in
+          county mapping for each district so no manual lookup is required.
+          District 1 = NW Ohio | District 2 = NW (Toledo area) |
+          District 3 = N Central | District 4 = NE Ohio (Stark, Summit, Mahoning) |
+          District 5 = E Central | District 6 = Central (Columbus/Franklin) |
+          District 7 = W Central (Dayton area) | District 8 = SW (Cincinnati) |
+          District 9 = S Central | District 10 = SE Ohio |
+          District 11 = E Ohio | District 12 = Greater Cleveland
+        </dialogexplanation>
+      </param>
+
+      <param name="mpo_name" displayname="MPO Name">
+        <dialogexplanation>
+          Select a Metropolitan Planning Organization from Ohio's 17 designated MPOs.
+          The tool maps each MPO to its member counties and downloads only those parcels.
+          AMATS = Akron | NOACA = Cleveland | MORPC = Columbus | OKI = Cincinnati |
+          MVRPC = Dayton | TMACOG = Toledo | SCATS = Canton | Eastgate = Youngstown |
+          LACRPC = Lima | LCATS = Newark | RCRPC = Mansfield | ERPC = Sandusky |
+          CCSTCC = Springfield | BHJ = Steubenville | KYOVA = Huntington |
+          BOMTS = Wheeling area | WWW = Parkersburg area
+        </dialogexplanation>
+      </param>
+
+      <param name="county_name" displayname="County Name">
+        <dialogexplanation>
+          Select any of Ohio's 88 counties from the dropdown list.
+          County-level extraction is the fastest single-area download option.
+          Supported counties: Adams, Allen, Ashland, Ashtabula, Athens, Auglaize,
+          Belmont, Brown, Butler, Carroll, Champaign, Clark, Clermont, Clinton,
+          Columbiana, Coshocton, Crawford, Cuyahoga, Darke, Defiance, Delaware,
+          Erie, Fairfield, Fayette, Franklin, Fulton, Gallia, Geauga, Greene,
+          Guernsey, Hamilton, Hancock, Hardin, Harrison, Henry, Highland, Hocking,
+          Holmes, Huron, Jackson, Jefferson, Knox, Lake, Lawrence, Licking, Logan,
+          Lorain, Lucas, Madison, Mahoning, Marion, Medina, Meigs, Mercer, Miami,
+          Monroe, Montgomery, Morgan, Morrow, Muskingum, Noble, Ottawa, Paulding,
+          Perry, Pickaway, Pike, Portage, Preble, Putnam, Richland, Ross, Sandusky,
+          Scioto, Seneca, Shelby, Stark, Summit, Trumbull, Tuscarawas, Union,
+          Van Wert, Vinton, Warren, Washington, Wayne, Williams, Wood, Wyandot.
+        </dialogexplanation>
+      </param>
+
+      <param name="boundary_feat" displayname="Custom Boundary Feature">
+        <dialogexplanation>
+          Browse to a polygon layer (shapefile or feature class) that defines
+          your study area — for example a township boundary, a buffer zone, or
+          a custom planning area. The tool will spatially intersect the statewide
+          parcel service against this boundary and export only the records that
+          fall within or touch it. The boundary layer must be visible in your
+          current ArcGIS Pro project.
+        </dialogexplanation>
+      </param>
+
+      <param name="out_folder" displayname="Output Folder">
+        <dialogexplanation>
+          Select the destination folder for your results. A File Geodatabase
+          named "Ohio_Regional_Export.gdb" will be created here automatically.
+          The exported feature class will be named Parcels_{FilterType} inside
+          that GDB. Using a local drive (C: or D:) rather than a network path
+          will give the fastest write speeds for large datasets.
+        </dialogexplanation>
+      </param>
+
+    </parameters>
+
+  </tool>
+</metadata>
