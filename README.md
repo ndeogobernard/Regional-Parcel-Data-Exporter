@@ -1,7 +1,7 @@
 # Ohio Regional Parcel Exporter
 
 > A production-grade ArcGIS Pro Python Toolbox (`.pyt`) for extracting Ohio
-> Statewide Parcel data by any geographic boundary — with zero manual layer
+> Statewide Parcel data by any geographic boundary, with zero manual layer
 > loading required.
 
 ---
